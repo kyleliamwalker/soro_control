@@ -12,15 +12,17 @@ class JoyControl( Node ):
     def __init__(self, dxl):
         super().__init__('joy_controller')
 
+        # step set as 150 for now as initial test
         self.dxl = dxl
-        self.o_increment = np.array([100, 0, -100, 0])
-        self.s_increment = np.array([-100, 0, 100, 0])
-        self.t_increment = np.array([0, 100, 0, -100])
-        self.x_increment = np.array([0, -100, 0, 100])
+        self.o_increment = np.array([150, 0, -150, 0])
+        self.s_increment = np.array([-150, 0, 150, 0])
+        self.t_increment = np.array([0, 150, 0, -150])
+        self.x_increment = np.array([0, -150, 0, 150])
 
         self.joy_sub = self.create_subscription(Joy, "/joy", self.joy_callback, 10)
 
 
+    # manually defined incremental stepping of each button press
     def joy_callback(self, joy_data):
 
         if joy_data.buttons[0] == 1:

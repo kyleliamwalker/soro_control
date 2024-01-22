@@ -21,6 +21,7 @@ def close_dxl(dyn):
     except:
         print("Failed to close the port")
  
+# init node class and shutdown motors on program termination
 def main(motor):
     rclpy.init()
     joy_controller = JoyControl(motor)
@@ -33,6 +34,7 @@ def main(motor):
         close_dxl(motor)
         rclpy.shutdown()
 
+# run program
 if __name__ == '__main__':
 
     dyn = DynamixelConfig()

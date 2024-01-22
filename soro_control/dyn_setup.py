@@ -3,6 +3,7 @@
 from dynamixel_sdk import *
 import sys
 
+# create and configure dynamixel object, return error messages if unsuccessful
 class DynamixelConfig():
 
     def __init__(self):
