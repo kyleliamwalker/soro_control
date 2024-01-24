@@ -14,10 +14,11 @@ class JoyControl( Node ):
 
         # step set as 150 for now as initial test
         self.dxl = dxl
-        self.o_increment = np.array([150, 0, -150, 0])
-        self.s_increment = np.array([-150, 0, 150, 0])
-        self.t_increment = np.array([0, 150, 0, -150])
-        self.x_increment = np.array([0, -150, 0, 150])
+        self.motor_step = 150
+        self.o_increment = np.array([self.motor_step, 0, -self.motor_step, 0])
+        self.s_increment = np.array([-self.motor_step, 0, self.motor_step, 0])
+        self.t_increment = np.array([0, self.motor_step, 0, -self.motor_step])
+        self.x_increment = np.array([0, -self.motor_step, 0, self.motor_step])
 
         self.joy_sub = self.create_subscription(Joy, "/joy", self.joy_callback, 10)
 

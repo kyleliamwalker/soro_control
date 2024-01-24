@@ -99,6 +99,6 @@ class DynamixelConfig():
             else:
                 print("DYNAMIXEL ID: %s has been successfully connected" % self.DXL_ID[id])
 
-        # self.dxl_home_position = [0, 0, 0, 0]
-        # for id in range(len(self.DXL_ID)):
-        #      self.dxl_home_position[id], dxl_comm_result, dxl_error = self.packetHandler.read4ByteTxRx(self.portHandler, self.DXL_ID[id], self.ADDR_PRESENT_POSITION)
+        self.dxl_home_position = [0, 0, 0, 0]
+        for id in range(len(self.DXL_ID)):
+             self.dxl_home_position[id], dxl_comm_result, dxl_error = self.packetHandler.read4ByteTxRx(self.portHandler, self.DXL_ID[id], self.ADDR_PRESENT_POSITION)
