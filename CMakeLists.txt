@@ -26,6 +26,7 @@ ament_python_install_package(${PROJECT_NAME})
 # Install Python executables
 install(PROGRAMS
   src/joy_control_node.py
+  src/ik_control_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
