@@ -10,7 +10,7 @@ def generate_launch_description():
             output="screen",
         ),
         Node(
-            package='soro_Control   ',
+            package='soro_control',
             executable='ik_control_node.py',
             name='ik_controller',
             output="screen",
