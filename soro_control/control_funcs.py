@@ -36,11 +36,11 @@ class ControllerSpec( Node ):
             self.L_change[i] = L_new[i] - self.L_init[i]
             self.step_change[i] = self.L_change[i]/self.metres_per_step
 
-        # print("Length changes are L1 = %s, L2 = %s, L3 = %s and L4 = %s" % (L_change[0], L_change[1], L_change[2], L_change[3]) )
-        # print("Step changes are L1 = %s, L2 = %s, L3 = %s and L4 = %s" % (step_change[0], step_change[1], step_change[2], step_change[3]) )
+        print("Length changes are L1 = %s, L2 = %s, L3 = %s and L4 = %s" % (self.L_change[0], self.L_change[1], self.L_change[2], self.L_change[3]) )
+        print("Step changes are L1 = %s, L2 = %s, L3 = %s and L4 = %s" % (self.step_change[0], self.step_change[1], self.step_change[2], self.step_change[3]) )
             
-        self.get_logger().info('Length Change: %s' % self.L_change[0])
-        self.get_logger().info('Step Change: %s' % self.step_change[0])
+        # self.get_logger().info('Length Change: %s' % self.L_change[0])
+        # self.get_logger().info('Step Change: %s' % self.step_change[0])
 
         for id in range(len(self.dxl.DXL_ID)):
             dxl_present_position, dxl_comm_result, dxl_error = self.dxl.packetHandler.read4ByteTxRx(self.dxl.portHandler, self.dxl.DXL_ID[id], self.dxl.ADDR_PRESENT_POSITION)
