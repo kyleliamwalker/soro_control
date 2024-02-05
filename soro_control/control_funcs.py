@@ -26,6 +26,30 @@ class ControllerSpec( Node ):
         self.angle_subscriber = self.create_subscription(ArcParam, '/move_tendons', self.set_ten_len_callback, 10)
         self.joy_subscriber = self.create_subscription(Joy, '/joy', self.joy_input, 10) 
 
+        self.test_counter = 1
+        self.test_publisher = self.create_publisher(ArcParam, "/move_tendons", 10)
+        self.test_timer = self.create_timer(3.0, self.timer_callback)
+
+    def timer_callback(self):
+    
+        msg = ArcParam()
+        if self.test_counter == 1:
+            msg.theta = 60.0
+            self.test_counter += 1
+        elif self.test_counter == 2:
+            msg.theta = 0.0
+            self.test_counter += 1
+        elif self.test_counter == 3:
+            msg.theta = -60.0
+            self.test_counter += 1
+        else:
+            msg.theta = 0.0
+            self.test_counter = 1
+        
+        msg.phi = 0.0
+        self.test_publisher.publish(msg)
+        
+
     def set_ten_len_callback(self, data):
 
         l1, l2, l3, l4 = self.get_tendon_lengths(data)
