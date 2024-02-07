@@ -27,6 +27,9 @@ ament_python_install_package(${PROJECT_NAME})
 install(PROGRAMS
   src/joy_control_node.py
   src/ik_control_node.py
+  src/high_level_control_node.py
+  src/low_level_control_node.py
+  src/joystick_control_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

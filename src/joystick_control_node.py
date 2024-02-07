@@ -8,6 +8,7 @@ from custom_interfaces.msg import ArcParam
 import rclpy
 import numpy as np
 from soro_control.util_funcs import *
+import math
 
 class JoyController( Node ):
 
@@ -22,13 +23,25 @@ class JoyController( Node ):
 
         # INSERT ANGLE CALCULATIONS FROM JOYSTICK READINGS HERE
 
-        self.euler = quaternion_to_euler(data.orientation)
-        state = generate_phi_theta(self)
-        phi = np.rad2deg(state[0].item())
-        theta = np.rad2deg(state[1].item())
+        joy_x = data.axes[3]
+        joy_y = data.axes[4]
 
-        # self.get_logger().info("Phi = %s" % phi)
-        # self.get_logger().info("Theta = %s" % theta)
+        self.get_logger().info("X = %s" % joy_x)
+        self.get_logger().info("Y = %s" % joy_y)
+
+        if joy_x == 0:
+            joy_x = 0.01
+        
+        if joy_y == 0:
+            joy_y == 0.01
+
+        theta = math.sqrt(joy_x**2 + joy_y**2) * 90.0
+        phi_rad = math.atan2(joy_y, joy_x)
+        phi_deg = math.degrees(phi_rad)
+
+
+        self.get_logger().info("Phi = %s" % phi_deg)
+        self.get_logger().info("Theta = %s" % theta)
         
         msg = ArcParam()
         if theta > -60 and theta < 60:
@@ -42,7 +55,7 @@ class JoyController( Node ):
         # else:
         #     msg.theta = np.sign(theta)*0
 
-        msg.phi = phi
+        msg.phi = phi_deg
         
         self.angles_pub.publish(msg)
 
