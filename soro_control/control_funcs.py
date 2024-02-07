@@ -6,7 +6,6 @@ from dynamixel_sdk import *
 from sensor_msgs.msg import Joy
 from custom_interfaces.msg import ArcParam
 
-
 class ControllerSpec( Node ):
 
     def __init__(self, dxl):
@@ -24,7 +23,7 @@ class ControllerSpec( Node ):
         self.metres_per_step = 2*math.pi*self.r_d/self.total_steps
 
         self.angle_subscriber = self.create_subscription(ArcParam, '/move_tendons', self.set_ten_len_callback, 10)
-        self.joy_subscriber = self.create_subscription(Joy, '/joy', self.joy_input, 10) 
+        # self.joy_subscriber = self.create_subscription(Joy, '/joy', self.joy_input, 10) 
 
         self.test_counter = 1
         self.test_publisher = self.create_publisher(ArcParam, "/move_tendons", 10)
@@ -100,36 +99,36 @@ class ControllerSpec( Node ):
         # print("Tendon lengths required are l1 = %s, l2 = %s, l3 = %s and l4 = %s" % (round(l1,4), round(l2,4), round(l3,4), round(l4,4)) )
         return l1, l2, l3, l4
     
-    # joystick command to halt movement when X is pressed
-    def joy_input(self, joy_data):
-        # global dxl_home_position
-        cross = joy_data.buttons[0]
-        circle = joy_data.buttons[1]
+    # # joystick command to halt movement when X is pressed
+    # def joy_input(self, joy_data):
+    #     # global dxl_home_position
+    #     cross = joy_data.buttons[0]
+    #     circle = joy_data.buttons[1]
 
-        if cross == 1:
-            # Allocate goal position value into byte array
-            for id in range(len(self.dxl.DXL_ID)):
-                dxl_present_position, dxl_comm_result, dxl_error = self.dxl.packetHandler.read4ByteTxRx(self.dxl.portHandler, self.dxl.DXL_ID[id], self.dxl.ADDR_PRESENT_POSITION)
-                param_goal_position = [DXL_LOBYTE(DXL_LOWORD(dxl_present_position)), DXL_HIBYTE(DXL_LOWORD(dxl_present_position)), DXL_LOBYTE(DXL_HIWORD(dxl_present_position)), DXL_HIBYTE(DXL_HIWORD(dxl_present_position))]
-                dxl_addparam_result = self.dxl.groupSyncWrite.addParam(self.dxl.DXL_ID[id], param_goal_position)
+    #     if cross == 1:
+    #         # Allocate goal position value into byte array
+    #         for id in range(len(self.dxl.DXL_ID)):
+    #             dxl_present_position, dxl_comm_result, dxl_error = self.dxl.packetHandler.read4ByteTxRx(self.dxl.portHandler, self.dxl.DXL_ID[id], self.dxl.ADDR_PRESENT_POSITION)
+    #             param_goal_position = [DXL_LOBYTE(DXL_LOWORD(dxl_present_position)), DXL_HIBYTE(DXL_LOWORD(dxl_present_position)), DXL_LOBYTE(DXL_HIWORD(dxl_present_position)), DXL_HIBYTE(DXL_HIWORD(dxl_present_position))]
+    #             dxl_addparam_result = self.dxl.groupSyncWrite.addParam(self.dxl.DXL_ID[id], param_goal_position)
                 
-                if dxl_addparam_result != 1:
-                    print("[ID:%03d] groupSyncWrite addparam failed" % (self.dxl.DXL_ID[id]))
-                    quit()
+    #             if dxl_addparam_result != 1:
+    #                 print("[ID:%03d] groupSyncWrite addparam failed" % (self.dxl.DXL_ID[id]))
+    #                 quit()
 
-        if circle == 1:
-            for id in range(len(self.dxl.DXL_ID)):
-                param_goal_position = [DXL_LOBYTE(DXL_LOWORD(self.dxl.dxl_home_position[id])), DXL_HIBYTE(DXL_LOWORD(self.dxl.dxl_home_position[id])), DXL_LOBYTE(DXL_HIWORD(self.dxl.dxl_home_position[id])), DXL_HIBYTE(DXL_HIWORD(self.dxl.dxl_home_position[id]))]
-                dxl_addparam_result = self.dxl.groupSyncWrite.addParam(self.dxl.DXL_ID[id], param_goal_position)
+    #     if circle == 1:
+    #         for id in range(len(self.dxl.DXL_ID)):
+    #             param_goal_position = [DXL_LOBYTE(DXL_LOWORD(self.dxl.dxl_home_position[id])), DXL_HIBYTE(DXL_LOWORD(self.dxl.dxl_home_position[id])), DXL_LOBYTE(DXL_HIWORD(self.dxl.dxl_home_position[id])), DXL_HIBYTE(DXL_HIWORD(self.dxl.dxl_home_position[id]))]
+    #             dxl_addparam_result = self.dxl.groupSyncWrite.addParam(self.dxl.DXL_ID[id], param_goal_position)
                 
-                if dxl_addparam_result != 1:
-                    print("[ID:%03d] groupSyncWrite addparam failed" % (self.dxl.DXL_ID[id]))
-                    quit()
+    #             if dxl_addparam_result != 1:
+    #                 print("[ID:%03d] groupSyncWrite addparam failed" % (self.dxl.DXL_ID[id]))
+    #                 quit()
 
         
-        dxl_comm_result = self.dxl.groupSyncWrite.txPacket()
-        if dxl_comm_result != COMM_SUCCESS:
-            print("%s" % self.dxl.packetHandler.getTxRxResult(dxl_comm_result))#
+    #     dxl_comm_result = self.dxl.groupSyncWrite.txPacket()
+    #     if dxl_comm_result != COMM_SUCCESS:
+    #         print("%s" % self.dxl.packetHandler.getTxRxResult(dxl_comm_result))#
 
-        self.dxl.groupSyncWrite.clearParam()
+    #     self.dxl.groupSyncWrite.clearParam()
 
