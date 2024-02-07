@@ -15,4 +15,16 @@ def generate_launch_description():
             name='joystick_controller',
             output="screen",
         ),
+        Node(
+            package='soro_control',
+            executable='high_level_control_node.py',
+            name='hl_controller',
+            output="screen",
+        ),
+        Node(
+            package='soro_control',
+            executable='low_level_control_node.py',
+            name='ll_controller',
+            output="screen",
+        ),
     ])
