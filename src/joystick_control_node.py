@@ -23,7 +23,7 @@ class JoyController( Node ):
 
         # INSERT ANGLE CALCULATIONS FROM JOYSTICK READINGS HERE
 
-        joy_x = data.axes[3]
+        joy_x = -data.axes[3]
         joy_y = data.axes[4]
 
         self.get_logger().info("X = %s" % joy_x)
