@@ -21,8 +21,6 @@ class JoyController( Node ):
 
     def joy_callback(self, data):
 
-        # INSERT ANGLE CALCULATIONS FROM JOYSTICK READINGS HERE
-
         joy_x = -data.axes[3]
         joy_y = data.axes[4]
 
