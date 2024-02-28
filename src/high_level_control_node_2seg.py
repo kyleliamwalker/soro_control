@@ -53,6 +53,10 @@ class HighLevelControl( Node ):
             else:
                 self.steps_to_goal[i] = self.L_change[i]/self.metres_per_step
 
+            if self.steps_to_goal[i] > -10 and self.steps_to_goal[i] < 10:
+                self.steps_to_goal[i] = 0
+
+
         # self.get_logger().info("Set Goal Positions of Tendons to l1 = %s, l2 = %s, l3 = %s and l4 = %s" 
         #                        % (round(l1,4), round(l2,4), round(l3,4), round(l4,4)) )
         
@@ -64,10 +68,10 @@ class HighLevelControl( Node ):
 
         # need to create message here for length change or some other control input
         control_msg = Control()
-        control_msg.l1 = self.pos[0] + round(self.steps_to_goal[0])*1.5
-        control_msg.l2 = self.pos[1] + round(self.steps_to_goal[1])*1.5
-        control_msg.l3 = self.pos[2] + round(self.steps_to_goal[2])*1.5
-        control_msg.l4 = self.pos[3] + round(self.steps_to_goal[3])*1.5
+        control_msg.l1 = self.pos[0] + round(self.steps_to_goal[0])
+        control_msg.l2 = self.pos[1] + round(self.steps_to_goal[1])
+        control_msg.l3 = self.pos[2] + round(self.steps_to_goal[2])
+        control_msg.l4 = self.pos[3] + round(self.steps_to_goal[3])
         #control_msg.l4 = round(self.step_change[3])
         self.seg1_control_publisher.publish(control_msg)
         

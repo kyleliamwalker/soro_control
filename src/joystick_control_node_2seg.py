@@ -53,16 +53,16 @@ class JoyController( Node ):
         msg1 = ArcParam()
         msg2 = ArcParam()
 
-        if theta1 > -60 and theta1 < 60:
+        if theta1 > -90 and theta1 < 90:
             msg1.theta = theta1
         else:
-            msg1.theta = np.sign(theta1)*60
+            msg1.theta = np.sign(theta1)*90
         msg1.phi = phi_deg1
 
-        if theta2 > -60 and theta2 < 60:
+        if theta2 > -90 and theta2 < 90:
             msg2.theta = theta2
         else:
-            msg2.theta = np.sign(theta2)*60
+            msg2.theta = np.sign(theta2)*90
         msg2.phi = phi_deg2
     
         self.seg1_angles_pub.publish(msg1)
