@@ -64,10 +64,10 @@ class HighLevelControl( Node ):
 
         # need to create message here for length change or some other control input
         control_msg = Control()
-        control_msg.l1 = self.pos[0] + round(self.steps_to_goal[0])
-        control_msg.l2 = self.pos[1] + round(self.steps_to_goal[1])
-        control_msg.l3 = self.pos[2] + round(self.steps_to_goal[2])
-        control_msg.l4 = self.pos[3] + round(self.steps_to_goal[3])
+        control_msg.l1 = self.pos[0] + round(self.steps_to_goal[0])*1.5
+        control_msg.l2 = self.pos[1] + round(self.steps_to_goal[1])*1.5
+        control_msg.l3 = self.pos[2] + round(self.steps_to_goal[2])*1.5
+        control_msg.l4 = self.pos[3] + round(self.steps_to_goal[3])*1.5
         #control_msg.l4 = round(self.step_change[3])
         self.seg1_control_publisher.publish(control_msg)
         
