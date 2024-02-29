@@ -53,9 +53,6 @@ class HighLevelControl( Node ):
             else:
                 self.steps_to_goal[i] = self.L_change[i]/self.metres_per_step
 
-            if self.steps_to_goal[i] > -10 and self.steps_to_goal[i] < 10:
-                self.steps_to_goal[i] = 0
-
 
         # self.get_logger().info("Set Goal Positions of Tendons to l1 = %s, l2 = %s, l3 = %s and l4 = %s" 
         #                        % (round(l1,4), round(l2,4), round(l3,4), round(l4,4)) )
