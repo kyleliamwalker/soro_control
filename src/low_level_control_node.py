@@ -90,7 +90,7 @@ class LowLevelControl( Node ):
         #disable torque, close port to reset for next run
         print("Disabling torque...")
         for id in range(len(self.dxl.DXL_ID)):
-            dxl_comm_result, dxl_error = dyn.packetHandler.write1ByteTxRx(self.dxl.portHandler, self.dxl.DXL_ID[id], self.dxl.ADDR_TORQUE_ENABLE, self.dxl.TORQUE_DISABLE)
+            dxl_comm_result, dxl_error = self.dxl.packetHandler.write1ByteTxRx(self.dxl.portHandler, self.dxl.DXL_ID[id], self.dxl.ADDR_TORQUE_ENABLE, self.dxl.TORQUE_DISABLE)
             if dxl_comm_result != COMM_SUCCESS:
                     print("%s" % self.dxl.packetHandler.getTxRxResult(dxl_comm_result))             
         try:
