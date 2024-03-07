@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from soro_control.dyn_setup2 import DynamixelConfig
-from soro_control.low_level_control_class_2seg import LowLevelControl
 import rclpy
 from dynamixel_sdk import *
 import numpy as np

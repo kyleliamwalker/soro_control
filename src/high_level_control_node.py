@@ -13,8 +13,8 @@ class HighLevelControl( Node ):
 
         super().__init__('hl_controller')
 
-        # self.L_init = 0.1
-        self.L_init = 0.2   #SHELL
+        self.L_init = 0.1 #huazhi
+        #self.L_init = 0.2   #SHELL
         self.alpha = [ 0, math.pi/2 ]
         self.r_d = 0.0125
         self.L = np.array([ self.L_init, self.L_init, self.L_init, self.L_init ])
