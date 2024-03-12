@@ -39,11 +39,11 @@ class JoyController( Node ):
         if seg2_joy_y == 0:
             seg2_joy_y == 0.01
 
-        theta1 = math.sqrt(seg1_joy_x**2 + seg1_joy_y**2) * 90.0
+        theta1 = math.sqrt(seg1_joy_x**2 + seg1_joy_y**2) * 75.0
         phi_rad1 = math.atan2(seg1_joy_y, seg1_joy_x)
         phi_deg1 = math.degrees(phi_rad1)
 
-        theta2 = math.sqrt(seg2_joy_x**2 + seg2_joy_y**2) * 90.0
+        theta2 = math.sqrt(seg2_joy_x**2 + seg2_joy_y**2) * 75.0
         phi_rad2 = math.atan2(seg2_joy_y, seg2_joy_x)
         phi_deg2 = math.degrees(phi_rad2)
 
