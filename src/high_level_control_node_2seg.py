@@ -14,9 +14,10 @@ class HighLevelControl( Node ):
         super().__init__('hl_controller')
 
         self.L_init = 0.1
-        #self.L_init = 0.2   # SHELL
+        #self.L_init = 0.35   # SHELL
         self.alpha = [ 0, math.pi/2 ]
         self.r_d = 0.0125
+        # self.r_d = 0.03
         self.L = np.array([ self.L_init, self.L_init, self.L_init, self.L_init, self.L_init, self.L_init, self.L_init, self.L_init ])
         self.L_change = [ 0, 0, 0, 0, 0, 0, 0, 0 ]
         self.steps_to_goal = [ 0, 0, 0, 0, 0, 0, 0, 0 ]
