@@ -20,10 +20,10 @@ class DynamixelConfig():
         self.PROTOCOL_VERSION               = 2.0               # See which protocol version is used in the Dynamixel
         # Default setting
         #self.DXL_ID                          = [ 9 ]#
-        # self.DXL_ID                         = [ 2, 5, 8, 11 ] # segment 2
-        # self.DXL_ID                         = [ 1, 4, 7, 10 ]   # segment 1
-        # self.DXL_ID                         = [ 1, 4, 7, 10, 2, 5, 8, 11 ]    # both segments
-        self.DXL_ID                         = [ 13, 14, 15, 16, 10, 20, 11, 17 ]    # SHELL
+        # self.DXL_ID                         = [ 2, 5, 8, 11 ] # segment 2, huazhi
+        # self.DXL_ID                         = [ 1, 4, 7, 10 ]   # segment 1, huazhi
+        self.DXL_ID                         = [ 1, 4, 7, 10, 2, 5, 8, 11 ]    # both segments, huazhi
+        # self.DXL_ID                         = [ 13, 14, 15, 16, 10, 20, 11, 17 ]    # SHELL
         self.BAUDRATE                       = 57600             # Dynamixel default baudrate : 57600
         self.DEVICENAME                     = '/dev/ttyUSB0'    # Check which port is being used on your controller
                                                         # ex) Windows: "COM1"   Linux: "/dev/ttyUSB0" Mac: "/dev/tty.usbserial-*"
