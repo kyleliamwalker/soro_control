@@ -4,7 +4,7 @@ from imu_ros2_driver.utils import quaternion_to_euler
 from rclpy.node import Node
 from dynamixel_sdk import *
 from sensor_msgs.msg import Joy
-from custom_interfaces.msg import ArcParam
+from custom_interfaces.msg import ArcParam2
 import rclpy
 import numpy as np
 from soro_control.util_funcs import *
@@ -14,11 +14,10 @@ class JoyController( Node ):
 
     def __init__(self):
 
-        super().__init__('imu_controller')
+        super().__init__('joy_controller')
 
-        self.imu_sub = self.create_subscription(Joy, "/joy", self.joy_callback, 10)
-        self.seg1_angles_pub = self.create_publisher(ArcParam, '/set_arc_parameters_1', 10)
-        self.seg2_angles_pub = self.create_publisher(ArcParam, '/set_arc_parameters_2', 10)
+        self.joy_sub = self.create_subscription(Joy, "/joy", self.joy_callback, 10)
+        self.angles_pub = self.create_publisher(ArcParam2, '/set_arc_parameters', 10)
 
     def joy_callback(self, data):
 
@@ -39,34 +38,32 @@ class JoyController( Node ):
         if seg2_joy_y == 0:
             seg2_joy_y == 0.01
 
-        theta1 = math.sqrt(seg1_joy_x**2 + seg1_joy_y**2) * 75.0
+        theta1 = math.sqrt(seg1_joy_x**2 + seg1_joy_y**2) * 90.0
         phi_rad1 = math.atan2(seg1_joy_y, seg1_joy_x)
         phi_deg1 = math.degrees(phi_rad1)
 
-        theta2 = math.sqrt(seg2_joy_x**2 + seg2_joy_y**2) * 75.0
+        theta2 = math.sqrt(seg2_joy_x**2 + seg2_joy_y**2) * 90.0
         phi_rad2 = math.atan2(seg2_joy_y, seg2_joy_x)
         phi_deg2 = math.degrees(phi_rad2)
 
         # self.get_logger().info("Phi = %s" % phi_deg)
         # self.get_logger().info("Theta = %s" % theta)
         
-        msg1 = ArcParam()
-        msg2 = ArcParam()
+        msg = ArcParam2()
 
         if theta1 > -90 and theta1 < 90:
-            msg1.theta = theta1
+            msg.theta = theta1
         else:
-            msg1.theta = np.sign(theta1)*90
-        msg1.phi = phi_deg1
+            msg.theta = np.sign(theta1)*90
+        msg.phi = phi_deg1
 
         if theta2 > -90 and theta2 < 90:
-            msg2.theta = theta2
+            msg.theta2 = theta2
         else:
-            msg2.theta = np.sign(theta2)*90
-        msg2.phi = phi_deg2
+            msg.theta2 = np.sign(theta2)*90
+        msg.phi2 = phi_deg2
     
-        self.seg1_angles_pub.publish(msg1)
-        self.seg2_angles_pub.publish(msg2)
+        self.angles_pub.publish(msg)
 
 def main():
     rclpy.init()

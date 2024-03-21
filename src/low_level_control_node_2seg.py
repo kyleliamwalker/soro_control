@@ -7,7 +7,7 @@ import numpy as np
 from rclpy.node import Node
 from dynamixel_sdk import *
 # from sensor_msgs.msg import Joy, Imu
-from custom_interfaces.msg import Control, Encoder#, EulerAngles, Status#
+from custom_interfaces.msg import Control2, Encoder#, EulerAngles, Status#
 import atexit
 
 class LowLevelControl( Node ):
@@ -24,11 +24,10 @@ class LowLevelControl( Node ):
 
         self.encoder_publisher = self.create_publisher(Encoder, '/encoder_pos', 10)
         # subscriber to control message
-        self.seg1_control_subscriber = self.create_subscription(Control, '/control_input_1', self.seg1_control_callback, 10)
-        self.seg2_control_subscriber = self.create_subscription(Control, '/control_input_2', self.seg2_control_callback, 10)
+        self.seg1_control_subscriber = self.create_subscription(Control2, '/control_input', self.control_callback, 10)
 
         # init timer to publish encoder position
-        timer_period = 0.25 # seconds
+        timer_period = 0.1 # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
         atexit.register(self.close_dxl)
@@ -65,12 +64,16 @@ class LowLevelControl( Node ):
             self.pos[id] = dxl_present_position
 
     # control input is goal encoder position, based on tendon length changes
-    def seg1_control_callback(self, input_msg):
+    def control_callback(self, input_msg):
 
         input = [input_msg.l1, 
                  input_msg.l2, 
                  input_msg.l3,
-                 input_msg.l4]
+                 input_msg.l4,
+                 input_msg.l5, 
+                 input_msg.l6, 
+                 input_msg.l7,
+                 input_msg.l8]
         
         # self.get_logger().info("seg1: %s" % input)
         for id in range(len(input)):
@@ -79,29 +82,6 @@ class LowLevelControl( Node ):
     
             if dxl_addparam_result != 1:
                 self.get_logger().info("[ID:%03d] groupSyncWrite addparam failed" % (self.dxl.DXL_ID[id]))
-                quit()
-
-        dxl_comm_result = self.dxl.groupSyncWrite.txPacket()
-        if dxl_comm_result != COMM_SUCCESS:
-            print("%s" % self.dxl.packetHandler.getTxRxResult(dxl_comm_result))#
-
-        self.dxl.groupSyncWrite.clearParam()
-
-    def seg2_control_callback(self, input_msg):
-
-        input = [input_msg.l1, 
-                 input_msg.l2, 
-                 input_msg.l3,
-                 input_msg.l4]
-        
-        # self.get_logger().info("seg2: %s" % input)
-        
-        for id in range(len(input)):
-            param_goal_position = [DXL_LOBYTE(DXL_LOWORD(input[id])), DXL_HIBYTE(DXL_LOWORD(input[id])), DXL_LOBYTE(DXL_HIWORD(input[id])), DXL_HIBYTE(DXL_HIWORD(input[id]))]
-            dxl_addparam_result = self.dxl.groupSyncWrite.addParam(self.dxl.DXL_ID[id+4], param_goal_position)
-    
-            if dxl_addparam_result != 1:
-                self.get_logger().info("[ID:%03d] groupSyncWrite addparam failed" % (self.dxl.DXL_ID[id+4]))
                 quit()
 
         dxl_comm_result = self.dxl.groupSyncWrite.txPacket()
