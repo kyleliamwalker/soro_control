@@ -27,7 +27,7 @@ class LowLevelControl( Node ):
         self.control_subscriber = self.create_subscription(Control, '/control_input', self.control_callback, 10)
 
         # init timer to publish encoder position
-        timer_period = 0.25 # seconds
+        timer_period = 0.1 # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
 
         atexit.register(self.close_dxl)
@@ -49,13 +49,6 @@ class LowLevelControl( Node ):
             encoder_msg.step_change.append(self.step_change[id])
 
         self.encoder_publisher.publish(encoder_msg)
-
-        # synthetic data, testing
-        # dxl_present_position = 500
-        # # create and publish encoder position msg
-        # msg.data = dxl_present_position
-        # self.encoder_publisher.publish(msg)
-        #self.get_logger().info('Publishing: "%s"' % encoder_msg.position)
 
     def get_enc_pos(self):
 

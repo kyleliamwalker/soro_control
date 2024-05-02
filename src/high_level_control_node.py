@@ -16,12 +16,13 @@ class HighLevelControl( Node ):
         self.L_init = 0.1 #huazhi
         #self.L_init = 0.2   #SHELL
         self.alpha = [ 0, math.pi/2 ]
-        self.r_d = 0.0125
+        self.r_d = 0.01
+        self.r_p = 0.0125
         self.L = np.array([ self.L_init, self.L_init, self.L_init, self.L_init ])
         self.L_change = [ 0, 0, 0, 0 ]
         self.steps_to_goal = [ 0, 0, 0, 0 ]
         self.total_steps = 4096
-        self.metres_per_step = 2*math.pi*self.r_d/self.total_steps
+        self.metres_per_step = 2*math.pi*self.r_p/self.total_steps
         self.pos = [0, 0, 0, 0]
 
         # subscribe to desired angle
