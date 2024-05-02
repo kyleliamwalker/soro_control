@@ -19,8 +19,6 @@ class LowLevelControl( Node ):
         
         self.pos = np.array([0,0,0,0])
         self.get_enc_pos()
-        # self.pos_init = self.pos
-        #self.step_change = np.array([0,0,0,0])
 
         self.encoder_publisher = self.create_publisher(Encoder, '/encoder_pos', 10)
         # subscriber to control message

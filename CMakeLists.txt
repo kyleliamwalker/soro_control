@@ -33,6 +33,7 @@ install(PROGRAMS
   src/high_level_control_node_2seg.py
   src/low_level_control_node_2seg.py
   src/joystick_control_node_2seg.py
+  src/trajectory_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

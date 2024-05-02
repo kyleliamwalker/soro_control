@@ -15,8 +15,8 @@ class HighLevelControl( Node ):
 
         self.L_init = 0.1 #huazhi
         #self.L_init = 0.2   #SHELL
-        self.alpha = [ 0, math.pi/2 ]
-        self.r_d = 0.01
+        self.alpha = [ math.pi/4, 3*math.pi/4, 5*math.pi/4, 7*math.pi/4 ]
+        self.r_rob = 0.015
         self.r_p = 0.0125
         self.L = np.array([ self.L_init, self.L_init, self.L_init, self.L_init ])
         self.L_change = [ 0, 0, 0, 0 ]
@@ -37,7 +37,7 @@ class HighLevelControl( Node ):
         self.pos = data.position
         self.step_change = np.array(data.step_change)
         self.L = self.L_init + self.step_change * self.metres_per_step
-        self.get_logger().info("Length %s" % self.L)
+        #self.get_logger().info("Length %s" % self.L)
 
     def set_ten_len_callback(self, data):
 
@@ -51,15 +51,6 @@ class HighLevelControl( Node ):
                 self.steps_to_goal[i] = 0
             else:
                 self.steps_to_goal[i] = self.L_change[i]/self.metres_per_step
-
-        # self.get_logger().info("Set Goal Positions of Tendons to l1 = %s, l2 = %s, l3 = %s and l4 = %s" 
-        #                        % (round(l1,4), round(l2,4), round(l3,4), round(l4,4)) )
-        
-        # # print("Length changes are L1 = %s, L2 = %s, L3 = %s and L4 = %s" % (L_change[0], L_change[1], L_change[2], L_change[3]) )
-        # # print("Step changes are L1 = %s, L2 = %s, L3 = %s and L4 = %s" % (step_change[0], step_change[1], step_change[2], step_change[3]) )
-            
-        # # self.get_logger().info('Length Change: %s' % self.L_change[0])
-        # # self.get_logger().info('Step Change: %s' % self.step_change[0])
 
         # need to create message here for length change or some other control input
         control_msg = Control()
@@ -80,8 +71,8 @@ class HighLevelControl( Node ):
         phi = math.radians(input.phi)
         # kappa = theta/L
 
-        l1 = self.L_init - theta*self.r_d*math.cos(self.alpha[0]-phi)
-        l2 = self.L_init - theta*self.r_d*math.cos(self.alpha[1]-phi)
+        l1 = self.L_init - theta*self.r_rob*math.cos(self.alpha[0]-phi)
+        l2 = self.L_init - theta*self.r_rob*math.cos(self.alpha[1]-phi)
         l3 = 2*self.L_init-l1
         l4 = 2*self.L_init-l2
         # print("Tendon lengths required are l1 = %s, l2 = %s, l3 = %s and l4 = %s" % (round(l1,4), round(l2,4), round(l3,4), round(l4,4)) )
