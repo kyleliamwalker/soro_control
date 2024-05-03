@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 
-from imu_ros2_driver.utils import quaternion_to_euler
 from rclpy.node import Node
 from dynamixel_sdk import *
-from sensor_msgs.msg import Joy
 from custom_interfaces.msg import ArcParam
 import rclpy
 import numpy as np
 from soro_control.util_funcs import *
-import math
 
 class JoyController( Node ):
 
